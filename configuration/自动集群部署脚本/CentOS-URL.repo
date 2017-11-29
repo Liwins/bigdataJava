@@ -1,0 +1,6 @@
+[base-source]
+name=CentOS-$releasever - Base Sources
+baseurl=http://192.168.33.202/rom/
+gpgcheck=0
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
