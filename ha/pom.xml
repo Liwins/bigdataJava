@@ -8,10 +8,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.riversky</groupId>
-    <artifactId>hadoopconfig</artifactId>
+    <artifactId>ha</artifactId>
     <packaging>jar</packaging>
 
-    <name>hadoopconfig</name>
+    <name>ha</name>
     <url>http://maven.apache.org</url>
 
     <properties>

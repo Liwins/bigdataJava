@@ -1,0 +1,25 @@
+
+1启动zookeeper集群（分别在mini5、mini6、mini7上启动zk）
+cd /home/hadoop/app/zookeeper-3.4.5/bin/
+./zkServer.sh start
+#查看状态：一个leader，两个follower
+./zkServer.sh status
+2启动journalnode（分别在在mini5、mini6、mini7上执行）
+cd /home/hadoop/app/hadoop-2.6.4
+sbin/hadoop-daemon.sh start journalnode
+			#运行jps命令检验，hadoop05、hadoop06、hadoop07上多了JournalNode进程
+3启动HDFS(在mini1上执行)
+			sbin/start-dfs.sh
+4启动YARN(#####注意#####：
+把namenode和resourcemanager分开是因为性能问题，因为他们都要占用大量资源，所以把他们分开了，他们分开了就要分别在不同的机器上启动)
+mini3上	sbin/start-yarn.sh
+mini4上yarn-daemon.sh start resourcemanager
+
+5到此，hadoop-2.6.4启动完成，可以统计浏览器访问:
+		http://mini1:50070
+		NameNode 'mini1:9000' (active)
+		http://mini2:50070
+		NameNode 'mini2:9000'
+		yarn
+		http://mini3:8088
+		http://mini4:8088
