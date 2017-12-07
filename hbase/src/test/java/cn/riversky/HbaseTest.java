@@ -21,11 +21,9 @@ import java.io.IOException;
  * Created by admin on 2017/12/6.
  */
 public class HbaseTest {
-
     static Configuration conf = null;
     private Connection connection = null;
     private Table table = null;
-
     /**
      * 初始化鏈接
      *
@@ -39,7 +37,6 @@ public class HbaseTest {
         connection = ConnectionFactory.createConnection(conf);
         table = connection.getTable(TableName.valueOf("user"));
     }
-
     /**
      * 生成表
      *
@@ -56,7 +53,6 @@ public class HbaseTest {
         desc.addFamily(family3);
         admin.createTable(desc);
     }
-
     /**
      * 刪除表
      *
@@ -69,7 +65,6 @@ public class HbaseTest {
         admin.deleteTable("test3");
         admin.close();
     }
-
     /**
      * 向表中添加数据
      *
@@ -86,14 +81,11 @@ public class HbaseTest {
         put.add(Bytes.toBytes("info1"), Bytes.toBytes("age"), Bytes.toBytes(12));
         table.put(put);
     }
-
     /**
      * 与增加相同，id相关通告即可
      */
     public void updateData() {
-
     }
-
     /**
      * 删除操作
      *
@@ -106,7 +98,6 @@ public class HbaseTest {
         delete.addFamily(Bytes.toBytes("info1"));
         table.delete(delete);
     }
-
     /**
      * 单挑查询
      *
@@ -120,10 +111,7 @@ public class HbaseTest {
         byte[] value1 = result.getValue(Bytes.toBytes("info2"), Bytes.toBytes("sex"));
         System.out.println(Bytes.toInt(value));
 //        get.addFamily(Bytes.toBytes("info2"));
-
-
     }
-
     /**
      * 全表扫描
      *
@@ -134,7 +122,6 @@ public class HbaseTest {
         //设置全表送啊秒
         ResultScanner scanner = table.getScanner(new Scan());
         for (Result sc : scanner) {
-
             byte[] value = sc.getValue(Bytes.toBytes("info2"), Bytes.toBytes("age"));
             byte[] value2 = sc.getValue(Bytes.toBytes("info2"), Bytes.toBytes("sex"));
             System.out.print(Bytes.toString(sc.getRow()) + "   ");
@@ -143,7 +130,6 @@ public class HbaseTest {
             System.out.println();
         }
     }
-
     /**
      * 全表扫描
      *
@@ -162,7 +148,6 @@ public class HbaseTest {
             System.out.println(Bytes.toString(sc.value()));
         }
     }
-
     /**
      * 通过过滤器来进行查找
      * 正则，对列值进行过滤
@@ -188,7 +173,6 @@ public class HbaseTest {
             System.out.println();
         }
     }
-
     /**
      * 匹配前缀名
      * @throws IOException
