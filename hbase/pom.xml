@@ -17,13 +17,17 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>org.apache.hbase</groupId>-->
-            <!--<artifactId>hbase-client</artifactId>-->
-            <!--<version>0.99.2</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-client</artifactId>
+            <version>0.99.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-common</artifactId>
+            <version>0.99.2</version>
+        </dependency>
         <!--<dependency>-->
             <!--<groupId>org.apache.hadoop</groupId>-->
             <!--<artifactId>hadoop-hdfs</artifactId>-->
