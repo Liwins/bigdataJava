@@ -11,6 +11,7 @@
         <module>hive</module>
         <module>hbase</module>
         <module>storm</module>
+        <module>kafka</module>
     </modules>
     <packaging>pom</packaging>
 

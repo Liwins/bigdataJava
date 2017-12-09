@@ -1,0 +1,38 @@
+http://archive.apache.org/dist/storm/apache-storm-0.9.5/
+解压
+1安装位置
+/home/hadoop/apps/storm
+2配置
+mv /home/hadoop/apps/storm/conf/storm.yaml /home/hadoop/apps/storm/conf/storm.yaml.back
+vi /home/hadoop/apps/storm/conf/storm.yaml
+storm.zookeeper.servers:
+- "datanode1"
+- "datanode3"
+- "datanode2"
+#指定storm集群中的nimbus节点所在的服务器
+nimbus.host: "namenode"
+#指定虚拟机的最大内存
+nimbus.childopts: "-Xmx1024m"
+#指定supervisor启动JVM最大的可用内存大小
+supervisor.childopts: "-Xmx768m"
+#指定ui启动JVM最大可用大小，ui服务一般与nimbus同在一个节点上
+ui.childopt: "-Xmx768m"
+#指定supervisor据诶点，启动worker时对应的端口号，每个端口对应槽，每个槽位对应一个worker
+supervisor.slots.ports:
+- 6700
+- 6701
+- 6702
+- 6703
+3scp到其他datanode 1 2 3
+4启动zookeeper集群
+5启动集群
+在nimbus.host所属的机器上启动 nimbus服务
+cd storm/bin/
+nohup ./storm nimbus &
+在nimbus.host所属的机器上启动ui服务
+cd storm/bin/
+nohup ./storm ui &
+在其它个点击上启动supervisor服务
+cd storm/bin/
+nohup ./storm supervisor  &
+
