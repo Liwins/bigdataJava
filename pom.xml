@@ -12,6 +12,7 @@
         <module>hbase</module>
         <module>storm</module>
         <module>kafka</module>
+        <module>redis</module>
     </modules>
     <packaging>pom</packaging>
 

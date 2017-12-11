@@ -1,0 +1,45 @@
+这里的主从为datanode1主，datanode2,datanode3从
+1解压，安装
+下载redis3.0.5
+wget  http://centall/soft/redis-3.0.7.tar.gz
+解压文件，并创建软件连接
+tar -zxvf  redis-3.0.7.tar.gz -C /export/servers/
+ln  -s  redis-3.0.5/  redis
+编译redis源码
+cd /export/servers/redis
+make（先安装gcc）
+将编译后的可执行文件安装到/user/local/redis
+make PREFIX=/usr/local/redis install
+2配置
+拷贝源码中的redis.conf文件到redis的安装目录
+vi redis.conf
+#后台运行
+daemonize  yes
+#日志文件位置
+logfile /usr/local/redis/logs/redis.log
+#密码
+requirepass riversky
+3scp远程拷贝
+配置文件 vi redis.conf
+slaveof  datanode1:6379
+#requirepass riversky
+masterauth  riversky
+注意日志文件要自己创建
+mkdir /usr/local/redis/logs
+
+4启动脚本编辑
+vi redisStart.sh
+for i in 1 2 3
+do
+ssh datanode$i "source /etc/profile;/usr/local/redis/bin/redis-server /usr/local/redis/redis.conf"
+done
+
+5验证
+启动客户端并验证(主机器）
+sh /usr/local/redis/bin/startcli.sh
+auth riversky
+set name test
+get name
+在其他主机上
+sh /usr/local/redis/bin/startcli.sh
+get name
