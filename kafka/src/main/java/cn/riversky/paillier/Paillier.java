@@ -5,7 +5,7 @@ import java.math.BigInteger;
 import java.util.Random;
 
 /**
- * Created by admin on 2017/12/9.
+ * @author Created by admin on 2017/12/9.
  */
 public class Paillier {
     /**
@@ -41,7 +41,7 @@ public class Paillier {
      *            parameter.
      */
     public Paillier(int bitLengthVal, int certainty) {
-        KeyGeneration(bitLengthVal, certainty);
+        keyGeneration(bitLengthVal, certainty);
     }
 
     /**
@@ -49,7 +49,7 @@ public class Paillier {
      * modulus and at least 1-2^(-64) certainty of primes generation.
      */
     public Paillier() {
-        KeyGeneration(512, 64);
+        keyGeneration(512, 64);
     }
 
     /**
@@ -62,7 +62,7 @@ public class Paillier {
      *          此构造函数的执行时间与此参数的值成比例。
      *
      */
-    public void KeyGeneration(int bitLengthVal, int certainty) {
+    public void keyGeneration(int bitLengthVal, int certainty) {
         bitLength = bitLengthVal;
         /*
          * Constructs two randomly generated positive BigIntegers that are
@@ -94,7 +94,7 @@ public class Paillier {
      *            random plaintext to help with encryption
      * @return ciphertext as a BigInteger
      */
-    public BigInteger Encryption(BigInteger m, BigInteger r) {
+    public BigInteger encryption(BigInteger m, BigInteger r) {
         return g.modPow(m, nsquare).multiply(r.modPow(n, nsquare)).mod(nsquare);
     }
 
@@ -106,7 +106,7 @@ public class Paillier {
      *            plaintext as a BigInteger
      * @return ciphertext as a BigInteger
      */
-    public BigInteger Encryption(BigInteger m) {
+    public BigInteger encryption(BigInteger m) {
         BigInteger r = new BigInteger(bitLength, new Random());
         return g.modPow(m, nsquare).multiply(r.modPow(n, nsquare)).mod(nsquare);
 
@@ -120,7 +120,7 @@ public class Paillier {
      *            ciphertext as a BigInteger
      * @return plaintext as a BigInteger
      */
-    public BigInteger Decryption(BigInteger c) {
+    public BigInteger decryption(BigInteger c) {
         BigInteger u = g.modPow(lambda, nsquare).subtract(BigInteger.ONE).divide(n).modInverse(n);
         return c.modPow(lambda, nsquare).subtract(BigInteger.ONE).divide(n).multiply(u).mod(n);
     }
@@ -132,7 +132,7 @@ public class Paillier {
      * @param em2
      * @return
      */
-    public BigInteger cipher_add(BigInteger em1, BigInteger em2) {
+    public BigInteger cipherAdd(BigInteger em1, BigInteger em2) {
         return em1.multiply(em2).mod(nsquare);
     }
 
@@ -143,14 +143,14 @@ public class Paillier {
         BigInteger m1 = new BigInteger("hello word".getBytes("UTF-8"));
         BigInteger m2 = new BigInteger("世界".getBytes("UTF-8"));
         /* 加密 */
-        BigInteger em1 = paillier.Encryption(m1);
-        BigInteger em2 = paillier.Encryption(m2);
+        BigInteger em1 = paillier.encryption(m1);
+        BigInteger em2 = paillier.encryption(m2);
         /*打印加密的文本*/
         System.out.println(em1);
         System.out.println(em2);
         /* 打印输出解密文本 */
-        System.out.println(new String(paillier.Decryption(em1).toByteArray()));
-        System.out.println(new String(paillier.Decryption(em2).toByteArray(),"UTF-8"));
+        System.out.println(new String(paillier.decryption(em1).toByteArray()));
+        System.out.println(new String(paillier.decryption(em2).toByteArray(),"UTF-8"));
     }
     /**
      * main function
@@ -165,34 +165,34 @@ public class Paillier {
         BigInteger m1 = new BigInteger("20");
         BigInteger m2 = new BigInteger("60");
         /* 加密 */
-        BigInteger em1 = paillier.Encryption(m1);
-        BigInteger em2 = paillier.Encryption(m2);
+        BigInteger em1 = paillier.encryption(m1);
+        BigInteger em2 = paillier.encryption(m2);
         /*打印加密的文本*/
         System.out.println(em1);
         System.out.println(em2);
         /* 打印输出解密文本 */
-        System.out.println(paillier.Decryption(em1).toString());
-        System.out.println(paillier.Decryption(em2).toString());
+        System.out.println(paillier.decryption(em1).toString());
+        System.out.println(paillier.decryption(em2).toString());
 
         /*
          * 测试同态属性 -> D(E(m1)*E(m2) mod n^2) = (m1 + m2) mod  n
          */
         // m1+m2,求明文数值的和
-        BigInteger sum_m1m2 = m1.add(m2).mod(paillier.n);
-        System.out.println("明文数值的和: " + sum_m1m2.toString());
+        BigInteger sumM1m2 = m1.add(m2).mod(paillier.n);
+        System.out.println("明文数值的和: " + sumM1m2.toString());
         // em1+em2，求密文数值的乘
-        BigInteger product_em1em2 = em1.multiply(em2).mod(paillier.nsquare);
-        System.out.println("encrypted sum: " + product_em1em2.toString());
-        System.out.println("decrypted sum: " + paillier.Decryption(product_em1em2).toString());
+        BigInteger productEm1em2 = em1.multiply(em2).mod(paillier.nsquare);
+        System.out.println("encrypted sum: " + productEm1em2.toString());
+        System.out.println("decrypted sum: " + paillier.decryption(productEm1em2).toString());
 
         /* test homomorphic properties -> D(E(m1)^m2 mod n^2) = (m1*m2) mod n */
         // m1*m2,求明文数值的乘
-        BigInteger prod_m1m2 = m1.multiply(m2).mod(paillier.n);
-        System.out.println("original product: " + prod_m1m2.toString());
+        BigInteger prodM1m2 = m1.multiply(m2).mod(paillier.n);
+        System.out.println("original product: " + prodM1m2.toString());
         // em1的m2次方，再mod paillier.nsquare
-        BigInteger expo_em1m2 = em1.modPow(m2, paillier.nsquare);
-        System.out.println("encrypted product: " + expo_em1m2.toString());
-        System.out.println("decrypted product: " + paillier.Decryption(expo_em1m2).toString());
+        BigInteger expoEm1m2 = em1.modPow(m2, paillier.nsquare);
+        System.out.println("encrypted product: " + expoEm1m2.toString());
+        System.out.println("decrypted product: " + paillier.decryption(expoEm1m2).toString());
 
         //sum test
         System.out.println("--------------------------------");
@@ -200,15 +200,15 @@ public class Paillier {
         BigInteger t1 = new BigInteger("21");System.out.println(t1.toString());
         BigInteger t2 = new BigInteger("50");System.out.println(t2.toString());
         BigInteger t3 = new BigInteger("50");System.out.println(t3.toString());
-        BigInteger et1 = p.Encryption(t1);System.out.println(et1.toString());
-        BigInteger et2 = p.Encryption(t2);System.out.println(et2.toString());
-        BigInteger et3 = p.Encryption(t3);System.out.println(et3.toString());
+        BigInteger et1 = p.encryption(t1);System.out.println(et1.toString());
+        BigInteger et2 = p.encryption(t2);System.out.println(et2.toString());
+        BigInteger et3 = p.encryption(t3);System.out.println(et3.toString());
         BigInteger sum = new BigInteger("1");
-        sum = p.cipher_add(sum, et1);
-        sum = p.cipher_add(sum, et2);
-        sum = p.cipher_add(sum, et3);
+        sum = p.cipherAdd(sum, et1);
+        sum = p.cipherAdd(sum, et2);
+        sum = p.cipherAdd(sum, et3);
         System.out.println("sum: "+sum.toString());
-        System.out.println("decrypted sum: "+p.Decryption(sum).toString());
+        System.out.println("decrypted sum: "+p.decryption(sum).toString());
         System.out.println("--------------------------------");
     }
 }

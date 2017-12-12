@@ -1,7 +1,9 @@
 package cn.riversky;
 
 /**
- * Created by admin on 2017/12/9.
+ * @author Created by admin on 2017/12/9.
  */
 public class Client {
+    public static void main(String[] args) {
+    }
 }

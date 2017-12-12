@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Created by admin on 2017/12/9.
+ * @author Created by admin on 2017/12/9.
  */
 public class KafkaConsumerSimple {
     private final static String TOPIC="first";
@@ -26,7 +26,7 @@ public class KafkaConsumerSimple {
         prop.put("auto.commit.interval.ms","1000");
         ConsumerConnector consumer= Consumer.createJavaConsumerConnector(new ConsumerConfig(prop));
         //消费数据
-        Map<String ,Integer> topicCountMap=new HashMap<>();
+        Map<String ,Integer> topicCountMap=new HashMap<String ,Integer>(16);
         topicCountMap.put(TOPIC,new Integer(1));
         Map<String,List<KafkaStream<byte[],byte[]>>> consumerMap=consumer.createMessageStreams(topicCountMap);
         KafkaStream<byte[],byte[]> stream=consumerMap.get(TOPIC).get(0);
