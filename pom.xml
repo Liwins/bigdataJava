@@ -13,6 +13,7 @@
         <module>storm</module>
         <module>kafka</module>
         <module>redis</module>
+        <module>logmonitor</module>
     </modules>
     <packaging>pom</packaging>
 

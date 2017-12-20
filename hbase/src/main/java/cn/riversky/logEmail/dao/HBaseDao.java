@@ -1,4 +1,4 @@
-package cn.riversky.dao;
+package cn.riversky.logEmail.dao;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
